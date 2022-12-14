@@ -17,6 +17,7 @@
     document.body.onload = function () {
 
         'use strict';
+
         function convertTextToBinary(input) {
             let enc = new TextEncoder();
             return enc.encode(input);
@@ -32,10 +33,18 @@
 
         // First the socket requesta
         function socketExample() {
-	    console.log('Creating socket');
-	    let address = 'ws://' + location.host;	
+            console.log('Creating socket');
+            let address = 'ws://' + location.host;
             let socket = new WebSocket(address);
+            socket.addEventListener('error', function (err) {
+                // Code to handle the error.
+                console.error('Client error', err);
+            });
             socket.binaryType = "arraybuffer";
+
+            socket.onerror = function (error) {
+                console.error('Client socket error', error);
+            }
 
             socket.onopen = function () {
                 console.log('Socket open.');

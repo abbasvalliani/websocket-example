@@ -15,7 +15,15 @@ wss.binaryType = 'arraybuffer';
 // Also mount the app here
 wsServer.on('request', app);
 
+wss.on('error', (error) => {
+    console.log("Websocket server error", error);
+});
+
 wss.on('connection', function connection(ws) {
+    ws.on('error', (error) => {
+        console.log("Websocket connection level error", error);
+    });
+
     ws.on('message', function incoming(message) {
         console.log("Received message");
         let txt = message.toString('utf8');
