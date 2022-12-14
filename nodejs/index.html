@@ -1,0 +1,84 @@
+<html>
+<head>
+    <title>WS example</title>
+</head>
+
+<body>
+<h2>Socket message response: </h2>
+<pre id="response"></pre>
+<hr/>
+<!--
+<h2>POST message response: </h2>
+<pre id="post-response"></pre>
+-->
+<script>
+
+    // Extremely simplified here, no error handling or anything
+    document.body.onload = function () {
+
+        'use strict';
+        function convertTextToBinary(input) {
+            let enc = new TextEncoder();
+            return enc.encode(input);
+        }
+
+        function convertBinaryToText(input) {
+            let decoder = new TextDecoder();
+            return decoder.decode(input);
+        }
+
+        const toBinString = (bytes) =>
+            bytes.reduce((str, byte) => str + byte.toString(2).padStart(8, '0'), '');
+
+        // First the socket requesta
+        function socketExample() {
+	    console.log('Creating socket');
+	    let address = 'ws://' + location.host;	
+            let socket = new WebSocket(address);
+            socket.binaryType = "arraybuffer";
+
+            socket.onopen = function () {
+                console.log('Socket open.');
+                let text = convertTextToBinary("John Doe");
+                socket.send(text);
+                console.log('Message sent.')
+            };
+
+            socket.onmessage = function (message) {
+                console.log('Socket wsServer message', message);
+                const messageText = convertBinaryToText(message.data);
+                document.getElementById('response').innerHTML = messageText;
+            };
+        }
+
+        // Now the simple POST demo
+        function postExample() {
+
+            console.log('Creating regular POST message');
+
+            fetch('/', {
+                method: 'post',
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({message: 'What is the meaning of post-life, the universe and everything?'})
+            })
+                .then(response => response.json())
+                .then(function (data) {
+
+                    console.log('POST response:', data);
+                    document.getElementById('post-response').innerHTML = JSON.stringify(data, null, 2);
+                })
+                .catch(function (error) {
+                    console.log('Request failed', error);
+                });
+        }
+
+        // Call them both;
+
+        socketExample();
+        //postExample();
+    }
+</script>
+</body>
+</html>
