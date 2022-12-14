@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  ws-java:
+    build:
+      context: ""
+      dockerfile: Dockerfile
+    container_name: ws-java
+    restart: unless-stopped
+    ports:
+      - "80:8080"
