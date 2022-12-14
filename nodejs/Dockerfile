@@ -4,7 +4,7 @@ ARG NODE_ENV=production
 
 ENV NODE_ENV=${NODE_ENV}
 
-ENV EXPRESS_PORT=8080
+#ENV EXPRESS_PORT=8080
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
