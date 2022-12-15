@@ -11,7 +11,7 @@
     <version>2.7.6</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <groupId>example</groupId>
+  <groupId>com.example</groupId>
   <artifactId>websockets</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>simple-websocket-example</name>
@@ -68,12 +68,12 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <mainClass>com.example.Application</mainClass>
-        </configuration>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-maven-plugin</artifactId>
+	<configuration>
+	  <mainClass>com.example.Application</mainClass>
+	</configuration>
       </plugin>
     </plugins>
-  </build>
+  </build>  
 </project>
